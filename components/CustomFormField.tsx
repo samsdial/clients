@@ -1,34 +1,37 @@
 "use client"
 
+import { E164Number } from "libphonenumber-js/core";
+import Image from "next/image";
+import { Control } from 'react-hook-form';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+
 import {
     FormControl,
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
-import Image from "next/image";
-import { Control } from 'react-hook-form';
-import PhoneInput from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
 import { FormFieldType } from './form/PatientForm';
 import { Input } from "./ui/input";
 
 
 
 interface CustomProps {
-    control: Control<any>,
-    fieldType: FormFieldType,
-    name: string, 
-    label?: string, 
-    placeholder: string, 
-    iconSrc: string, 
-    iconAlt: string,
-    disabled?: boolean,
-    dateFormat?: string,
-    showTimeSelect?:boolean,
-    children?: React.ReactNode,
-    renderSkeleton?: (field: any) => React.ReactNode
-}
+    control: Control<any>;
+    name: string;
+    label?: string;
+    placeholder?: string;
+    iconSrc?: string;
+    iconAlt?: string;
+    disabled?: boolean;
+    dateFormat?: string;
+    showTimeSelect?: boolean;
+    children?: React.ReactNode;
+    renderSkeleton?: (field: any) => React.ReactNode;
+    fieldType: FormFieldType;
+  }
 
 const RenderField = ({field, props}: { field: any, props: CustomProps}) => {
     const { fieldType, name, label, placeholder, iconSrc, iconAlt} = props;
@@ -68,6 +71,8 @@ const RenderField = ({field, props}: { field: any, props: CustomProps}) => {
                     />
                 </FormControl>
             )
+        default:
+            return null;
     }
 }
 
@@ -83,6 +88,8 @@ const CustomFormField = (props: CustomProps) => {
                 <FormLabel>{label}</FormLabel>
               )}
               <RenderField field={field} props={props} />
+
+              <FormMessage className="shad-error" />
             </FormItem>
           )}
         />
